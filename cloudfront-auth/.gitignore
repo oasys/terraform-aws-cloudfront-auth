@@ -1,0 +1,14 @@
+config.json
+*.DS_Store
+cloudfront-auth.zip
+id_rsa
+id_rsa.pub
+google-authz.json
+auth.js
+/index.js
+/.idea
+tests/logs/*
+!tests/logs/.gitkeep
+tests/config
+/distributions
+packaged.yaml

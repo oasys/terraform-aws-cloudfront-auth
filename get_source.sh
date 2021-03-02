@@ -11,3 +11,4 @@ unzip -q master.zip
 rm master.zip
 mv cloudfront-auth-master "$DIR"
 (cd "$DIR" && npm install --silent)
+grep -v "node_modules" ${DIR}/.gitignore > ${DIR}/.gitignore.new && mv ${DIR}/.gitignore{.new,}

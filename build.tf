@@ -31,7 +31,13 @@ resource "null_resource" "copy_files" {
     command = "cp -r ${path.module}/cloudfront-auth/node_modules ${path.module}/lambda/"
   }
   provisioner "local-exec" {
-    command = "cp ${path.module}/cloudfront-auth/{nonce.js,package.json,package-lock.json} ${path.module}/lambda/"
+    command = "cp ${path.module}/cloudfront-auth/nonce.js ${path.module}/lambda/"
+  }
+  provisioner "local-exec" {
+    command = "cp ${path.module}/cloudfront-auth/package.json ${path.module}/lambda/"
+  }
+  provisioner "local-exec" {
+    command = "cp ${path.module}/cloudfront-auth/package-lock.json ${path.module}/lambda/"
   }
   provisioner "local-exec" {
     command = "cp ${path.module}/cloudfront-auth/authn/openid.index.js ${path.module}/lambda/index.js"
