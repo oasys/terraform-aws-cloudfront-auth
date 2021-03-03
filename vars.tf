@@ -1,6 +1,10 @@
 variable "vendor" {
   type    = string
   default = "OKTA"
+  validation {
+    condition     = contains(["OKTA"], var.vendor)
+    error_message = "Not a supported vendor."
+  }
 }
 
 variable "client_id" {
