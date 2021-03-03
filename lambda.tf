@@ -19,7 +19,7 @@ resource "aws_lambda_function" "cloudfront_auth" {
   description      = "Managed by Terraform"
   runtime          = "nodejs12.x"
   role             = aws_iam_role.lambda_role.arn
-  filename         = "lambda.zip"
+  filename         = "${path.module}/lambda.zip"
   function_name    = "cloudfront_auth"
   handler          = "index.handler"
   publish          = true

@@ -9,8 +9,8 @@ data "archive_file" "lambda" {
     local_file.private_key,
   ]
   type        = "zip"
-  output_path = "lambda.zip"
-  source_dir  = "lambda"
+  output_path = "${path.module}/lambda.zip"
+  source_dir  = "${path.module}/lambda"
 }
 
 resource "null_resource" "copy_files" {
@@ -25,32 +25,32 @@ resource "null_resource" "copy_files" {
     session_duration = var.session_duration
   }
   provisioner "local-exec" {
-    command = "rm -rf lambda && mkdir lambda"
+    command = "rm -rf ${path.module}/lambda && mkdir ${path.module}/lambda"
   }
   provisioner "local-exec" {
-    command = "cp -r cloudfront-auth/node_modules lambda/"
+    command = "cp -r ${path.module}/cloudfront-auth/node_modules ${path.module}/lambda/"
   }
   provisioner "local-exec" {
-    command = "cp cloudfront-auth/{nonce.js,package.json,package-lock.json} lambda/"
+    command = "cp ${path.module}/cloudfront-auth/{nonce.js,package.json,package-lock.json} ${path.module}/lambda/"
   }
   provisioner "local-exec" {
-    command = "cp cloudfront-auth/authn/openid.index.js lambda/index.js"
+    command = "cp ${path.module}/cloudfront-auth/authn/openid.index.js ${path.module}/lambda/index.js"
   }
   provisioner "local-exec" {
-    command = "cp cloudfront-auth/authz/okta.js lambda/auth.js"
+    command = "cp ${path.module}/cloudfront-auth/authz/okta.js ${path.module}/lambda/auth.js"
   }
 }
 
 resource "local_file" "private_key" {
   depends_on      = [null_resource.copy_files]
-  filename        = "lambda/id_rsa"
+  filename        = "${path.module}/lambda/id_rsa"
   content         = tls_private_key.keypair.private_key_pem
   file_permission = "0600"
 }
 
 resource "local_file" "public_key" {
   depends_on      = [null_resource.copy_files]
-  filename        = "lambda/id_rsa.pub"
+  filename        = "${path.module}/lambda/id_rsa.pub"
   content         = tls_private_key.keypair.public_key_pem
   file_permission = "0644"
 }
@@ -61,7 +61,7 @@ resource "tls_private_key" "keypair" {
 }
 
 resource "local_file" "config" {
-  filename = "lambda/config.json"
+  filename = "${path.module}/lambda/config.json"
   sensitive_content = jsonencode({
     "_terraform_refresh" : null_resource.copy_files.id,
     "AUTH_REQUEST" : {
