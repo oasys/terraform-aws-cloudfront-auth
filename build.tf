@@ -15,13 +15,7 @@ data "archive_file" "lambda" {
 
 resource "null_resource" "copy_files" {
   triggers = {
-    vendor           = var.vendor
-    client_id        = var.client_id
-    client_secret    = var.client_secret
-    redirect_uri     = var.redirect_uri
-    base_url         = var.base_url
-    distributions    = var.distribution
-    session_duration = var.session_duration
+    vendor = var.vendor
   }
   provisioner "local-exec" {
     command = "rm -rf ${path.module}/lambda && mkdir ${path.module}/lambda"
