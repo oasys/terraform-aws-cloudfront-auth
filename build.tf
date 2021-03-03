@@ -15,7 +15,6 @@ data "archive_file" "lambda" {
 
 resource "null_resource" "copy_files" {
   triggers = {
-    always_run       = timestamp()
     vendor           = var.vendor
     client_id        = var.client_id
     client_secret    = var.client_secret
