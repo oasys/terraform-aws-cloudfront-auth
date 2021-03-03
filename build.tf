@@ -47,10 +47,10 @@ resource "null_resource" "copy_files" {
 }
 
 resource "local_file" "private_key" {
-  depends_on      = [null_resource.copy_files]
-  filename        = "${path.module}/lambda/id_rsa"
-  content         = tls_private_key.keypair.private_key_pem
-  file_permission = "0600"
+  depends_on        = [null_resource.copy_files]
+  filename          = "${path.module}/lambda/id_rsa"
+  sensitive_content = tls_private_key.keypair.private_key_pem
+  file_permission   = "0600"
 }
 
 resource "local_file" "public_key" {
