@@ -15,7 +15,8 @@ data "archive_file" "lambda" {
 
 resource "null_resource" "copy_files" {
   triggers = {
-    vendor = var.vendor
+    vendor         = var.vendor
+    always_rebuild = var.always_rebuild ? timestamp() : false
   }
   provisioner "local-exec" {
     command = "rm -rf ${path.module}/lambda && mkdir ${path.module}/lambda"

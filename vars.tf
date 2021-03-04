@@ -46,3 +46,8 @@ variable "aliases" {
   type    = list(string)
   default = []
 }
+
+variable "always_rebuild" {
+  type    = bool
+  default = true
+}
