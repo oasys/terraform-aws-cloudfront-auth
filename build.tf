@@ -62,8 +62,7 @@ resource "tls_private_key" "keypair" {
 
 resource "local_file" "config" {
   filename = "${path.module}/lambda/config.json"
-  sensitive_content = jsonencode({
-    "_terraform_refresh" : null_resource.copy_files.id,
+  sensitive_content = null_resource.copy_files.id > 0 ? jsonencode({
     "AUTH_REQUEST" : {
       "client_id" : var.client_id,
       "response_type" : "code",
@@ -85,5 +84,5 @@ resource "local_file" "config" {
     "BASE_URL" : var.base_url,
     "CALLBACK_PATH" : "/_callback",
     "AUTHZ" : var.vendor
-  })
+  }) : ""
 }
