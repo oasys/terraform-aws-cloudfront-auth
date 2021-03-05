@@ -29,11 +29,11 @@ repos:
   - id: tflint
   - id: shellcheck
 - repo: https://github.com/igorshubovych/markdownlint-cli
-  rev: v0.26.0
+  rev: v0.27.1
   hooks:
   - id: markdownlint
 - repo: https://github.com/bridgecrewio/checkov.git
-  rev: 1.0.816
+  rev: 1.0.825
   hooks:
   - id: checkov
 - repo: https://github.com/codespell-project/codespell
