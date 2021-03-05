@@ -42,6 +42,11 @@ variable "s3_bucket_name" {
   type = string
 }
 
+variable "deploy_arn" {
+  description = "IAM user to give permissions to update site (via s3 bucket)."
+  type        = string
+}
+
 variable "aliases" {
   type    = list(string)
   default = []
@@ -50,4 +55,10 @@ variable "aliases" {
 variable "always_rebuild" {
   type    = bool
   default = true
+}
+
+variable "tags" {
+  description = "Common tags for created resources"
+  type        = map(any)
+  default     = {}
 }

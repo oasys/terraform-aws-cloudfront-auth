@@ -15,7 +15,7 @@ data "aws_iam_policy_document" "lambda_log_access" {
 # This function is created in us-east-1 as required by CloudFront.
 resource "aws_lambda_function" "cloudfront_auth" {
   #provider = aws.us-east-1
-
+  # checkov:skip=CKV_AWS_50:x-ray tracing not used
   description      = "Managed by Terraform"
   runtime          = "nodejs12.x"
   role             = aws_iam_role.lambda_role.arn
@@ -25,7 +25,7 @@ resource "aws_lambda_function" "cloudfront_auth" {
   publish          = true
   timeout          = 5
   source_code_hash = data.archive_file.lambda.output_base64sha256
-  #tags             = var.tags
+  #tags            = var.tags
 }
 
 data "aws_iam_policy_document" "lambda_assume_role" {
