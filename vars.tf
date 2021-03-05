@@ -1,9 +1,9 @@
-variable "vendor" {
+variable "auth_provider" {
   type    = string
   default = "OKTA"
   validation {
-    condition     = contains(["OKTA"], var.vendor)
-    error_message = "Not a supported vendor."
+    condition     = contains(["OKTA"], var.auth_provider)
+    error_message = "Not a supported authentication provider."
   }
 }
 

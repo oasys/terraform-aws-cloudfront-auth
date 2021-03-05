@@ -15,7 +15,7 @@ data "archive_file" "lambda" {
 
 resource "null_resource" "copy_files" {
   triggers = {
-    vendor         = var.vendor
+    auth_provider  = var.auth_provider
     always_rebuild = var.always_rebuild ? timestamp() : false
   }
   provisioner "local-exec" {
@@ -76,13 +76,13 @@ resource "local_file" "config" {
       "grant_type" : "authorization_code"
     },
     "DISTRIBUTION" : var.distribution,
-    "AUTHN" : var.vendor,
+    "AUTHN" : var.auth_provider,
     "PRIVATE_KEY" : tls_private_key.keypair.private_key_pem,
     "PUBLIC_KEY" : tls_private_key.keypair.public_key_pem,
     "DISCOVERY_DOCUMENT" : "${var.base_url}/.well-known/openid-configuration",
     "SESSION_DURATION" : var.session_duration * 60 * 60,
     "BASE_URL" : var.base_url,
     "CALLBACK_PATH" : "/_callback",
-    "AUTHZ" : var.vendor
+    "AUTHZ" : var.auth_provider
   }) : ""
 }
