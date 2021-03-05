@@ -1,10 +1,5 @@
-
-data "aws_s3_bucket" "site" {
-  bucket = var.s3_bucket_name
-}
-
 resource "aws_cloudfront_origin_access_identity" "oai" {
-  comment = var.s3_bucket_name
+  comment = local.s3_bucket_name
 }
 
 resource "aws_cloudfront_distribution" "dist" {
@@ -12,14 +7,14 @@ resource "aws_cloudfront_distribution" "dist" {
   is_ipv6_enabled     = true
   default_root_object = "index.html"
   price_class         = "PriceClass_100"
-  aliases             = concat([var.distribution], [var.s3_bucket_name], var.aliases)
+  aliases             = distinct(concat([var.hostname], [local.s3_bucket_name], var.aliases))
 
   # checkov:skip=CKV_AWS_68:do not require WAF to reduce costs
   # checkov:skip=CKV_AWS_86:no access logging
 
   origin {
-    origin_id   = data.aws_s3_bucket.site.id
-    domain_name = data.aws_s3_bucket.site.bucket_regional_domain_name
+    origin_id   = aws_s3_bucket.site.id
+    domain_name = aws_s3_bucket.site.bucket_regional_domain_name
 
     s3_origin_config {
       origin_access_identity = aws_cloudfront_origin_access_identity.oai.cloudfront_access_identity_path
@@ -31,7 +26,7 @@ resource "aws_cloudfront_distribution" "dist" {
     compress               = true
     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
     cached_methods         = ["GET", "HEAD", ]
-    target_origin_id       = data.aws_s3_bucket.site.id
+    target_origin_id       = aws_s3_bucket.site.id
     min_ttl                = 0
     default_ttl            = 86400
     max_ttl                = 31536000

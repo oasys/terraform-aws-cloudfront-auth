@@ -1,5 +1,9 @@
+locals {
+  s3_bucket_name = var.s3_bucket_name == null ? var.hostname : var.s3_bucket_name
+}
+
 resource "aws_s3_bucket" "site" {
-  bucket = var.s3_bucket_name
+  bucket = local.s3_bucket_name
   acl    = "private"
   # checkov:skip=CKV_AWS_21:versioning not needed
   # checkov:skip=CKV_AWS_18:access logging disabled for cost savings

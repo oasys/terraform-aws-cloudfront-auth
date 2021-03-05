@@ -1,45 +1,58 @@
+variable "hostname" {
+  description = "Hostname of the managed website."
+  type        = string
+  validation {
+    condition     = can(regex("[.0-9a-z-]", var.hostname))
+    error_message = "The hostname must be a valid DNS name."
+  }
+}
+
 variable "auth_provider" {
-  type    = string
-  default = "OKTA"
+  description = "Authentication provider.  Currently only 'OKTA' is supported."
+  type        = string
+  default     = "OKTA"
   validation {
     condition     = contains(["OKTA"], var.auth_provider)
-    error_message = "Not a supported authentication provider."
+    error_message = "This is not a supported authentication provider."
   }
 }
 
 variable "client_id" {
-  type = string
+  description = "The client_id from authentication provider."
+  type        = string
 }
 
 variable "client_secret" {
-  type      = string
-  sensitive = true
+  description = "The client_secret from authentication provider."
+  type        = string
+  sensitive   = true
 }
 
 variable "redirect_uri" {
-  type = string
+  description = "The URI to redirect users to after successful login."
+  type        = string
 }
 
 variable "base_url" {
-  type = string
+  description = "The base_url or Org URL of the authentication provider."
+  type        = string
 }
 
 variable "session_duration" {
-  description = "hours"
+  description = "Length of time session will be valid."
   type        = number
   default     = 24
 }
 
-variable "distribution" {
-  type = string
-}
-
 variable "acm_cert_arn" {
-  type = string
+  description = "ARN of AWS Certificate Manager certificate for website."
+  type        = string
 }
 
 variable "s3_bucket_name" {
-  type = string
+  description = "Name of website S3 bucket.  Must be globally unique.  Defaults to hostname."
+  type        = string
+  default     = null
 }
 
 variable "deploy_arn" {
@@ -48,13 +61,15 @@ variable "deploy_arn" {
 }
 
 variable "aliases" {
-  type    = list(string)
-  default = []
+  description = "List of any aliases (CNAMEs) for the website."
+  type        = list(string)
+  default     = []
 }
 
 variable "always_rebuild" {
-  type    = bool
-  default = true
+  description = "Always create new lambda zip source directory.  Useful for environments, such as Terraform Cloud, where the terraform runner does not preserve local disk contents."
+  type        = bool
+  default     = true
 }
 
 variable "tags" {

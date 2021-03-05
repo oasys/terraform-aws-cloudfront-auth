@@ -75,7 +75,7 @@ resource "local_file" "config" {
       "redirect_uri" : var.redirect_uri,
       "grant_type" : "authorization_code"
     },
-    "DISTRIBUTION" : var.distribution,
+    "DISTRIBUTION" : var.hostname,
     "AUTHN" : var.auth_provider,
     "PRIVATE_KEY" : tls_private_key.keypair.private_key_pem,
     "PUBLIC_KEY" : tls_private_key.keypair.public_key_pem,
