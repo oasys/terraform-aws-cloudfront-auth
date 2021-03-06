@@ -7,7 +7,7 @@ variable "hostname" {
   description = "Hostname of the managed website."
   type        = string
   validation {
-    condition     = can(regex("[.0-9a-z-]", var.hostname))
+    condition     = can(regex("^[.0-9a-z-]+$", var.hostname))
     error_message = "The hostname must be a valid DNS name."
   }
 }
@@ -37,11 +37,19 @@ variable "redirect_uri" {
   description = "The URI to redirect users to after successful login.  Defaults to /_callback on hostname."
   type        = string
   default     = null
+  validation {
+    condition     = can(regex("^https?://", var.redirect_uri))
+    error_message = "URI must begin with 'http://' or 'https://'."
+  }
 }
 
 variable "base_url" {
   description = "The base_url or Org URL of the authentication provider."
   type        = string
+  validation {
+    condition     = can(regex("^https?://", var.base_url))
+    error_message = "URL must begin with 'http://' or 'https://'."
+  }
 }
 
 variable "session_duration" {
@@ -71,6 +79,12 @@ variable "aliases" {
   description = "List of any aliases (CNAMEs) for the website."
   type        = list(string)
   default     = []
+  validation {
+    condition = alltrue([
+      for alias in var.aliases : can(regex("^[.0-9a-z-]+$", alias))
+    ])
+    error_message = "Aliases must be a valid DNS name."
+  }
 }
 
 variable "always_rebuild" {
