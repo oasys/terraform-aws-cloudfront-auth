@@ -1,3 +1,8 @@
+locals {
+  s3_bucket_name = var.s3_bucket_name == null ? var.hostname : var.s3_bucket_name
+  redirect_uri   = var.redirect_uri == null ? "https://${var.hostname}/_callback" : var.redirect_uri
+}
+
 variable "hostname" {
   description = "Hostname of the managed website."
   type        = string
@@ -29,8 +34,9 @@ variable "client_secret" {
 }
 
 variable "redirect_uri" {
-  description = "The URI to redirect users to after successful login."
+  description = "The URI to redirect users to after successful login.  Defaults to /_callback on hostname."
   type        = string
+  default     = null
 }
 
 variable "base_url" {

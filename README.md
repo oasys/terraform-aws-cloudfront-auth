@@ -117,7 +117,7 @@ No Modules.
 | client\_secret | The client\_secret from authentication provider. | `string` | n/a | yes |
 | deploy\_arn | IAM user to give permissions to update site (via s3 bucket). | `string` | n/a | yes |
 | hostname | Hostname of the managed website. | `string` | n/a | yes |
-| redirect\_uri | The URI to redirect users to after successful login. | `string` | n/a | yes |
+| redirect\_uri | The URI to redirect users to after successful login.  Defaults to /\_callback on hostname. | `string` | `null` | no |
 | s3\_bucket\_name | Name of website S3 bucket.  Must be globally unique.  Defaults to hostname. | `string` | `null` | no |
 | session\_duration | Length of time session will be valid. | `number` | `24` | no |
 | tags | Common tags for created resources | `map(any)` | `{}` | no |

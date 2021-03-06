@@ -67,12 +67,12 @@ resource "local_file" "config" {
       "client_id" : var.client_id,
       "response_type" : "code",
       "scope" : "openid email",
-      "redirect_uri" : var.redirect_uri
+      "redirect_uri" : local.redirect_uri
     },
     "TOKEN_REQUEST" : {
       "client_id" : var.client_id,
       "client_secret" : var.client_secret,
-      "redirect_uri" : var.redirect_uri,
+      "redirect_uri" : local.redirect_uri,
       "grant_type" : "authorization_code"
     },
     "DISTRIBUTION" : var.hostname,
