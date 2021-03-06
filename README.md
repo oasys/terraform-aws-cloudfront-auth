@@ -1,5 +1,7 @@
 # Terraform CloudFront OpenID Connect
 
+[![License: GPL v3][license-badge]][license]
+
 ## Introduction
 
 This module will build a website that is protected by an
@@ -14,13 +16,12 @@ to support others (Google/Microsoft/GitHub/Auth0/Centrify).
 
 ## Based on
 
-This project uses the nodejs code from
-[Widen](https://github.com/Widen/cloudfront-auth/) for the Lambda
+This project uses the nodejs code from [Widen][widen] for the Lambda
 function.  Their repository includes a `build.js` script that
 interactively prompts for configuration items (client_id, client_secret,
 etc.) and builds the lambda zip file.  This does not lend itself well
-to automation; this repository replaces that logic with `build.tf`
-and `local-exec` resources create the archive.
+to automation; this repository replaces that logic with `build.tf` and
+`local-exec` resources create the archive.
 
 The Scale Factory team created the (now hibernating)
 [terraform-cloudfront-auth](https://github.com/scalefactory/terraform-cloudfront-auth)
@@ -65,7 +66,6 @@ module "cloudfront_okta" {
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.14 |
 | archive | ~> 2.1 |
 | aws | ~> 3.0 |
 | local | ~> 2.1 |
@@ -116,7 +116,7 @@ No Modules.
 | base\_url | The base\_url or Org URL of the authentication provider. | `string` | n/a | yes |
 | client\_id | The client\_id from authentication provider. | `string` | n/a | yes |
 | client\_secret | The client\_secret from authentication provider. | `string` | n/a | yes |
-| deploy\_arn | (Optional) IAM user to give permissions to update site (via s3 bucket). | `string` | `null` | no |
+| deploy\_arn | IAM user to give permissions to update site (via s3 bucket). | `string` | n/a | yes |
 | hostname | Hostname of the managed website. | `string` | n/a | yes |
 | redirect\_uri | The URI to redirect users to after successful login.  Defaults to /\_callback on hostname. | `string` | `null` | no |
 | s3\_bucket\_name | Name of website S3 bucket.  Must be globally unique.  Defaults to hostname. | `string` | `null` | no |
@@ -130,3 +130,19 @@ No Modules.
 | cloudfront\_distribution | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 <!-- markdownlint-restore -->
+
+## License
+
+This project is licensed under the [GNU GPLv3][gpl].  Please use and
+change to suit your needs.
+
+This repository includes the source from [Widen's cloudfront-auth
+project][widen] and its dependencies, compliant with the project's
+[license][widen-license].
+
+---
+[license-badge]: https://img.shields.io/badge/License-GPLv3-blue.svg
+[gpl]: https://www.gnu.org/licenses/quick-guide-gplv3.html
+[license]: ./LICENSE
+[widen-license]: ./cloudfront-auth/LICENSE
+[widen]: https://github.com/Widen/cloudfront-auth/
