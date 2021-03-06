@@ -65,6 +65,7 @@ module "cloudfront_okta" {
 
 | Name | Version |
 |------|---------|
+| terraform | >= 0.14 |
 | archive | ~> 2.1 |
 | aws | ~> 3.0 |
 | local | ~> 2.1 |
