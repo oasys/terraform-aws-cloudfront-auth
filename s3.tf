@@ -25,7 +25,6 @@ data "aws_iam_policy_document" "s3_bucket_policy" {
       identifiers = [aws_cloudfront_origin_access_identity.oai.iam_arn]
     }
   }
-
   statement {
     actions   = ["s3:ListBucket"]
     resources = [aws_s3_bucket.site.arn]
@@ -34,8 +33,12 @@ data "aws_iam_policy_document" "s3_bucket_policy" {
       identifiers = [aws_cloudfront_origin_access_identity.oai.iam_arn]
     }
   }
+  override_json = var.deploy_arn == null ? "{}" : data.aws_iam_policy_document.deploy.json
+}
 
+data "aws_iam_policy_document" "deploy" {
   statement {
+    sid       = "UpdateSite"
     actions   = ["s3:PutObject", "s3:PutObjectAcl"]
     resources = ["${aws_s3_bucket.site.arn}/*"]
     principals {
@@ -43,7 +46,6 @@ data "aws_iam_policy_document" "s3_bucket_policy" {
       identifiers = [var.deploy_arn]
     }
   }
-
 }
 
 resource "aws_s3_bucket_policy" "bucket_policy" {

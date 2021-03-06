@@ -62,8 +62,9 @@ variable "s3_bucket_name" {
 }
 
 variable "deploy_arn" {
-  description = "IAM user to give permissions to update site (via s3 bucket)."
+  description = "(Optional) IAM user to give permissions to update site (via s3 bucket)."
   type        = string
+  default     = null
 }
 
 variable "aliases" {

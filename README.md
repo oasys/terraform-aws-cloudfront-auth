@@ -115,7 +115,7 @@ No Modules.
 | base\_url | The base\_url or Org URL of the authentication provider. | `string` | n/a | yes |
 | client\_id | The client\_id from authentication provider. | `string` | n/a | yes |
 | client\_secret | The client\_secret from authentication provider. | `string` | n/a | yes |
-| deploy\_arn | IAM user to give permissions to update site (via s3 bucket). | `string` | n/a | yes |
+| deploy\_arn | (Optional) IAM user to give permissions to update site (via s3 bucket). | `string` | `null` | no |
 | hostname | Hostname of the managed website. | `string` | n/a | yes |
 | redirect\_uri | The URI to redirect users to after successful login.  Defaults to /\_callback on hostname. | `string` | `null` | no |
 | s3\_bucket\_name | Name of website S3 bucket.  Must be globally unique.  Defaults to hostname. | `string` | `null` | no |
