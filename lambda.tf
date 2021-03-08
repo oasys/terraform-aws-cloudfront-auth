@@ -25,7 +25,7 @@ resource "aws_lambda_function" "cloudfront_auth" {
   publish          = true
   timeout          = 5
   source_code_hash = data.archive_file.lambda.output_base64sha256
-  #tags            = var.tags
+  tags             = var.tags
 }
 
 data "aws_iam_policy_document" "lambda_assume_role" {
@@ -51,6 +51,7 @@ data "aws_iam_policy_document" "lambda_assume_role" {
 resource "aws_iam_role" "lambda_role" {
   name               = "lambda_role"
   assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.json
+  tags               = var.tags
 }
 
 # Attach the logging access document to the above role.

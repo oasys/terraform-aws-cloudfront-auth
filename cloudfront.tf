@@ -55,5 +55,5 @@ resource "aws_cloudfront_distribution" "dist" {
       restriction_type = "none"
     }
   }
-  #tags                = var.tags
+  tags = var.tags
 }
