@@ -1,6 +1,6 @@
 # Terraform CloudFront Auth
 
-[![Version: v1.0.0][version-badge]][changelog]
+[![Version: v1.0.1][version-badge]][changelog]
 [![License: GPL v3][license-badge]][license]
 
 ## Introduction
@@ -109,6 +109,6 @@ project][widen] and its dependencies, compliant with the project's
 [license]: ./LICENSE
 [widen-license]: ./cloudfront-auth/LICENSE
 [widen]: https://github.com/Widen/cloudfront-auth/
-[version-badge]: https://img.shields.io/badge/version-1.0.0-blue.svg
+[version-badge]: https://img.shields.io/badge/version-1.0.1-blue.svg
 [license-badge]: https://img.shields.io/badge/License-GPLv3-blue.svg
 [changelog]: ./CHANGELOG.md
