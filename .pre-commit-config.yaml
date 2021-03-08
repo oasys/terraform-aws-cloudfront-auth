@@ -27,6 +27,7 @@ repos:
   - id: terraform-fmt
   - id: terragrunt-hclfmt
   - id: terraform-validate
+    exclude: example
   - id: tflint
   - id: shellcheck
 - repo: https://github.com/igorshubovych/markdownlint-cli

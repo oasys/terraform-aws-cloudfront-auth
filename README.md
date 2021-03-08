@@ -49,7 +49,8 @@ data "aws_acm_certificate" "cert" {
 }
 
 module "cloudfront_okta" {
-  source        = "github.com/oasys/terraform-aws-cloudfront-openid"
+  source        = "oasys/cloudfront-auth/aws"
+  version       = "1.0.0"
   hostname      = "www.example.com"
   acm_cert_arn  = data.aws_acm_certificate.cert.arn
   auth_provider = "OKTA"
@@ -60,6 +61,8 @@ module "cloudfront_okta" {
   deploy_arn    = var.deploy_arn
 }
 ```
+
+A more comprehensive example is included in the `example/` directory.
 
 <!-- markdownlint-disable -->
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
