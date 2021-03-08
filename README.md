@@ -85,7 +85,9 @@ module "cloudfront_okta" {
 
 | Name | Description |
 |------|-------------|
-| cloudfront\_distribution | n/a |
+| cloudfront\_distribution | CloudFront distribution |
+| lambda\_function | Lambda function |
+| s3\_bucket | S3 bucket |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 <!-- markdownlint-restore -->
 
