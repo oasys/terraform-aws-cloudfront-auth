@@ -20,6 +20,7 @@ repos:
   rev: v1.47.0
   hooks:
   - id: terraform_docs
+    args: [-a --hide-all --show inputs --show outputs]
 - repo: https://github.com/gruntwork-io/pre-commit
   rev: v0.1.12
   hooks:
