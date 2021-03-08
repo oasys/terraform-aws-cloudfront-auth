@@ -17,7 +17,7 @@ resource "aws_lambda_function" "cloudfront_auth" {
   runtime          = "nodejs12.x"
   role             = aws_iam_role.lambda_role.arn
   filename         = "${path.module}/lambda.zip"
-  function_name    = "${var.hostname}-cloudfront_auth"
+  function_name    = "${replace(var.hostname, "/[^A-Za-z0-9-]/", "_")}-cloudfront_auth"
   handler          = "index.handler"
   publish          = true
   timeout          = 5
