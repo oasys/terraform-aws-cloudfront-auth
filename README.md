@@ -1,4 +1,4 @@
-# Terraform CloudFront OpenID Connect
+# Terraform CloudFront Auth
 
 [![Version: v1.0.0][version-badge]][changelog]
 [![License: GPL v3][license-badge]][license]
