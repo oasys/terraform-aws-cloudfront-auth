@@ -5,10 +5,7 @@ data "aws_iam_policy_document" "lambda_log_access" {
       "logs:CreateLogStream",
       "logs:PutLogEvents",
     ]
-    resources = [
-      "arn:aws:logs:*:*:*",
-    ]
-    effect = "Allow"
+    resources = ["arn:aws:logs:*:*:*"]
   }
 }
 
@@ -16,11 +13,11 @@ data "aws_iam_policy_document" "lambda_log_access" {
 resource "aws_lambda_function" "cloudfront_auth" {
   #provider = aws.us-east-1
   # checkov:skip=CKV_AWS_50:x-ray tracing not used
-  description      = "Managed by Terraform"
+  description      = "${var.auth_provider} authentication for ${var.hostname}"
   runtime          = "nodejs12.x"
   role             = aws_iam_role.lambda_role.arn
   filename         = "${path.module}/lambda.zip"
-  function_name    = "cloudfront_auth"
+  function_name    = "${var.hostname}-cloudfront_auth"
   handler          = "index.handler"
   publish          = true
   timeout          = 5
@@ -29,13 +26,8 @@ resource "aws_lambda_function" "cloudfront_auth" {
 }
 
 data "aws_iam_policy_document" "lambda_assume_role" {
-  // Trust relationships taken from blueprint
-  // Allow lambda to assume this role.
   statement {
-    actions = [
-      "sts:AssumeRole",
-    ]
-
+    actions = ["sts:AssumeRole"]
     principals {
       type = "Service"
       identifiers = [
@@ -43,8 +35,6 @@ data "aws_iam_policy_document" "lambda_assume_role" {
         "lambda.amazonaws.com",
       ]
     }
-
-    effect = "Allow"
   }
 }
 
@@ -54,13 +44,11 @@ resource "aws_iam_role" "lambda_role" {
   tags               = var.tags
 }
 
-# Attach the logging access document to the above role.
 resource "aws_iam_role_policy_attachment" "lambda_log_access" {
   role       = aws_iam_role.lambda_role.name
   policy_arn = aws_iam_policy.lambda_log_access.arn
 }
 
-# Create an IAM policy that will be attached to the role
 resource "aws_iam_policy" "lambda_log_access" {
   name   = "cloudfront_auth_lambda_log_access"
   policy = data.aws_iam_policy_document.lambda_log_access.json
